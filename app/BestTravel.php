@@ -7,34 +7,31 @@ class BestTravel
   public function chooseBestSum($t, $k, $ls) {
     
     $max = null;
-    
-    if ($k ==2) {
-      for ($i = 0; $i < count($ls); $i ++) {
-        for ($j = 0; $j < count($ls); $j ++) {
-          if (($ls[$i] + $ls[$j]) <= $t) {
-            $max = max($max, ($ls[$i] + $ls[$j]));
-          }    
-        }
-      }
-      return $max;
-    }
 
-    foreach ($ls as $value) {
-      if ($value <= $t) {
-        $max = max($max, $value);
+    $combin_arr = $this->combination($ls, $k);
+    var_dump($combin_arr);
+    foreach ($combin_arr as $value) {
+    
+      $sum = array_reduce($value, function ($carry, $item) {
+        return $carry + $item;
+      });
+
+      if ($sum <= $t) {
+        $max = max($max, $sum);
       }
-    }  
+    
+    }
 
     return $max;      
   
   }
 
-  public function combination($arr, $n)
+  private function combination($arr, $n)
   {
     if (count($arr) == $n) {
       return [$arr];
     }
-    if (count($arr) == 0 || $n == 0) {
+    if (count($arr) < $n || $n == 0) {
       return [[]];
     }
 
@@ -43,7 +40,7 @@ class BestTravel
 
   }
 
-  public function merge($add, $arr)
+  private function merge($add, $arr)
   {
     return array_map(function ($item) use ($add) {
       return array_merge((array)$add, $item);

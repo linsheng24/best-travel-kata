@@ -71,5 +71,14 @@ class BestTravelTest extends TestCase
     //Assert
     $this->assertEquals($expected, $actual);
   }
+
+  public function testCountOnesBasics() {
+    $ts = [50, 55, 56, 57, 58];
+    $this->assertEquals(163, $this->travel->chooseBestSum(163, 3, $ts));
+    $ts = [50];
+    $this->assertEquals(null, $this->travel->chooseBestSum(163, 3, $ts));
+    $ts = [91, 74, 73, 85, 73, 81, 87];
+    $this->assertEquals(228, $this->travel->chooseBestSum(230, 3, $ts));
+  }
   
 }
