@@ -7,9 +7,8 @@ class BestTravel
   public function chooseBestSum($t, $k, $ls) {
     
     $max = null;
-
     $combin_arr = $this->combination($ls, $k);
-    var_dump($combin_arr);
+    
     foreach ($combin_arr as $value) {
     
       $sum = array_reduce($value, function ($carry, $item) {
@@ -22,8 +21,7 @@ class BestTravel
     
     }
 
-    return $max;      
-  
+    return $max;       
   }
 
   private function combination($arr, $n)
