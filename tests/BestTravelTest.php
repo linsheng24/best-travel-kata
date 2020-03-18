@@ -63,7 +63,7 @@ class BestTravelTest extends TestCase
     $t = 25;
     $k = 1;
     $ts = $this->ts;
-    
+
     $expected = 20;
     //Act
     $actual = $this->travel->chooseBestSum($t, $k, $ts);
