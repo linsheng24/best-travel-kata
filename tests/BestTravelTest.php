@@ -39,6 +39,24 @@ class BestTravelTest extends TestCase
   /**
    * @test
    */
+  public function chooseBestSum_Givet85k2_Return85()
+  {
+    //Arrange
+    $t = 85;
+    $k = 2;
+    $ts = $this->ts;
+    
+    $expected = 85;
+    //Act
+    $actual = $this->travel->chooseBestSum($t, $k, $ts);
+    
+    //Assert
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @test
+   */
   public function chooseBestSum_Givet25k1_Return20()
   {
     //Arrange
