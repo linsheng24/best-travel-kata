@@ -4,45 +4,48 @@ namespace App;
 class BestTravel
 {
 
-  public function chooseBestSum($t, $k, $ls) {
+  public function chooseBestSum($maxAcceptedDistance, $townNumber, $townDistances) {
     
-    $max = null;
-    $combin_arr = $this->combination($ls, $k);
+    $maxDistance = null;
+    $townDistancesCombination = $this->combination_of_towns($townDistances, $townNumber);
     
-    foreach ($combin_arr as $value) {
+    foreach ($townDistancesCombination as $townDistances) {
     
-      $sum = array_reduce($value, function ($carry, $item) {
-        return $carry + $item;
+      $visitTownDistanceSum = array_reduce($townDistances, function ($carry, $Distance) {
+        return $carry + $Distance;
       });
 
-      if ($sum <= $t) {
-        $max = max($max, $sum);
+      if ($visitTownDistanceSum <= $maxAcceptedDistance) {
+        $maxDistance = max($maxDistance, $visitTownDistanceSum);
       }
     
     }
 
-    return $max;       
+    return $maxDistance;       
   }
 
-  private function combination($arr, $n)
+  private function combination_of_towns($townDistances, $townNumber)
   {
-    if (count($arr) == $n) {
-      return [$arr];
+    if (count($townDistances) == $townNumber) {
+      return [$townDistances];
     }
-    if (count($arr) < $n || $n == 0) {
+    if (count($townDistances) < $townNumber || $townNumber == 0) {
       return [[]];
     }
 
-    $remain_items = array_slice($arr, 1);
-    return array_merge($this->merge($arr[0], $this->combination($remain_items, $n - 1)), $this->combination($remain_items, $n));
+    $remainItemsExceptfirstItem = array_slice($townDistances, 1);
+    return array_merge(
+      $this->merge_town_distance_to_combination($townDistances[0], 
+      $this->combination_of_towns($remainItemsExceptfirstItem, $townNumber - 1)), $this->combination_of_towns($remainItemsExceptfirstItem, $townNumber)
+    );
 
   }
 
-  private function merge($add, $arr)
+  private function merge_town_distance_to_combination($townDistace, $distanceCombination)
   {
-    return array_map(function ($item) use ($add) {
-      return array_merge((array)$add, $item);
-    }, $arr);
+    return array_map(function ($combinationItem) use ($townDistace) {
+      return array_merge((array)$townDistace, $combinationItem);
+    }, $distanceCombination);
   }
 
 }
